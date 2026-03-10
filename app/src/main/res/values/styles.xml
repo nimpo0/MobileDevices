@@ -1,0 +1,21 @@
+<resources>
+    <style name="SlotChip">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">@dimen/height_chip</item>
+        <item name="android:layout_columnWeight">1</item>
+        <item name="android:background">@drawable/bg_chip</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/text</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="WeekLabel">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/muted</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+</resources>
+

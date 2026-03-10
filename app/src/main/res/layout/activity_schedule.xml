@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:padding="@dimen/pad_screen">
+
+    <ImageButton
+        android:id="@+id/btnPrev"
+        android:layout_width="@dimen/nav_btn_size"
+        android:layout_height="@dimen/nav_btn_size"
+        android:background="@drawable/bg_chip"
+        android:contentDescription="prev"
+        android:src="@android:drawable/ic_media_previous"
+        app:tint="@color/icon_tint"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/tvMonthTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/june_2023_title"
+        android:textStyle="bold"
+        android:textSize="@dimen/month_title_size"
+        android:textColor="@color/text"
+        android:gravity="center"
+        android:layout_marginStart="@dimen/month_title_side_margin"
+        android:layout_marginEnd="@dimen/month_title_side_margin"
+        app:layout_constraintTop_toTopOf="@id/btnPrev"
+        app:layout_constraintBottom_toBottomOf="@id/btnPrev"
+        app:layout_constraintStart_toEndOf="@id/btnPrev"
+        app:layout_constraintEnd_toStartOf="@id/btnNext"/>
+
+    <ImageButton
+        android:id="@+id/btnNext"
+        android:layout_width="@dimen/nav_btn_size"
+        android:layout_height="@dimen/nav_btn_size"
+        android:background="@drawable/bg_chip"
+        android:contentDescription="next"
+        android:src="@android:drawable/ic_media_next"
+        app:tint="@color/icon_tint"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <LinearLayout
+        android:id="@+id/rowWeek"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/m_sm"
+        app:layout_constraintTop_toBottomOf="@id/btnPrev"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            style="@style/WeekLabel"
+            android:text="Mon"/>
+
+        <TextView
+            style="@style/WeekLabel"
+            android:text="Tue"/>
+
+        <TextView
+            style="@style/WeekLabel"
+            android:text="Wed"/>
+
+        <TextView
+            style="@style/WeekLabel"
+            android:text="Thu"/>
+
+        <TextView
+            style="@style/WeekLabel"
+            android:text="Fri"/>
+
+        <TextView
+            style="@style/WeekLabel"
+            android:text="Sat"/>
+
+        <TextView
+            style="@style/WeekLabel"
+            android:text="Sun"/>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCalendar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/calendar_height"
+        android:layout_marginTop="@dimen/calendar_margin_top"
+        android:overScrollMode="never"
+        app:layout_constraintTop_toBottomOf="@id/rowWeek"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="7"
+        tools:listitem="@layout/item_day_cell"
+        tools:itemCount="42"/>
+
+    <TextView
+        android:id="@+id/tvSchedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/schedule"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_section"
+        android:textColor="@color/text"
+        android:layout_marginTop="@dimen/schedule_title_margin_top"
+        app:layout_constraintTop_toBottomOf="@id/rvCalendar"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <Button
+        android:id="@+id/btnAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/add_btn_height"
+        android:text="@string/add_event"
+        android:textAllCaps="false"
+        android:textColor="@color/on_primary"
+        android:background="@drawable/bg_primary_button"
+        app:layout_constraintTop_toTopOf="@id/tvSchedule"
+        app:layout_constraintBottom_toBottomOf="@id/tvSchedule"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvEvents"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/m_sm"
+        app:layout_constraintTop_toBottomOf="@id/tvSchedule"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:listitem="@layout/item_event"
+        tools:itemCount="3"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

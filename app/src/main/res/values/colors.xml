@@ -1,0 +1,13 @@
+<resources>
+    <color name="bg">#FFFDF7</color>
+    <color name="text">#161616</color>
+    <color name="muted">#8F835C</color>
+    <color name="stroke">#E9DEBA</color>
+    <color name="card">#FFF5D6</color>
+    <color name="primary">#F0C84B</color>
+    <color name="on_primary">#FFFFFF</color>
+    <color name="selected">#F0C84B</color>
+    <color name="on_selected">#2B220E</color>
+    <color name="hint">#8F835C</color>
+    <color name="icon_tint">#161616</color>
+</resources>

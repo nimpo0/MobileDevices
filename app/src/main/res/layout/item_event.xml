@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_event_card"
+    android:padding="@dimen/pad_block"
+    android:layout_marginBottom="@dimen/gap">
+
+    <TextView
+        android:id="@+id/tvEventTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="@color/text"
+        tools:text="Lorem ipsum dolor sit amet" />
+
+    <TextView
+        android:id="@+id/tvEventDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/muted"
+        android:textSize="@dimen/text_caption"
+        android:layout_marginTop="@dimen/m_xs"
+        tools:text="Lorem ipsum..." />
+
+    <TextView
+        android:id="@+id/tvEventTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text"
+        android:textSize="@dimen/text_caption"
+        android:layout_marginTop="@dimen/m_sm"
+        tools:text="10:00 - 12:00" />
+
+    <TextView
+        android:id="@+id/tvEventAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text"
+        android:textSize="@dimen/text_caption"
+        android:layout_marginTop="2dp"
+        tools:text="Address" />
+</LinearLayout>

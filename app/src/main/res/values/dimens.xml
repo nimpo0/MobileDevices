@@ -1,0 +1,32 @@
+<resources>
+    <dimen name="pad_screen">16dp</dimen>
+    <dimen name="pad_block">12dp</dimen>
+    <dimen name="gap">10dp</dimen>
+    <dimen name="radius_card">16dp</dimen>
+    <dimen name="radius_chip">10dp</dimen>
+    <dimen name="radius_button">18dp</dimen>
+    <dimen name="height_primary_button">52dp</dimen>
+    <dimen name="height_input">52dp</dimen>
+    <dimen name="height_chip">40dp</dimen>
+    <dimen name="height_day_chip">50dp</dimen>
+    <dimen name="text_title">28sp</dimen>
+    <dimen name="text_section">14sp</dimen>
+    <dimen name="text_caption">12sp</dimen>
+    <dimen name="m_xs">6dp</dimen>
+    <dimen name="m_sm">10dp</dimen>
+    <dimen name="m_md">18dp</dimen>
+    <dimen name="chip_pad_h">14dp</dimen>
+    <dimen name="nav_btn_size">40dp</dimen>
+    <dimen name="month_title_size">18sp</dimen>
+    <dimen name="month_title_side_margin">10dp</dimen>
+    <dimen name="calendar_margin_top">6dp</dimen>
+    <dimen name="schedule_title_margin_top">14dp</dimen>
+    <dimen name="add_btn_height">30dp</dimen>
+    <dimen name="calendar_height">280dp</dimen>
+    <dimen name="content_max_width">720dp</dimen>
+    <dimen name="day_cell_height">44dp</dimen>
+    <dimen name="day_cell_margin">2dp</dimen>
+    <dimen name="day_circle_size">34dp</dimen>
+    <dimen name="day_dot_size">5dp</dimen>
+    <dimen name="day_dot_margin_bottom">6dp</dimen>
+</resources>

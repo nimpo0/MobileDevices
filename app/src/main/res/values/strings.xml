@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Lab3</string>
+    <string name="appointment">Appointment</string>
+    <string name="schedule">Schedule</string>
+    <string name="june_2023">June, 2023</string>
+    <string name="june_2023_title">June 2023</string>
+    <string name="time_slots">Time slots</string>
+    <string name="information">Information</string>
+    <string name="name">Name</string>
+    <string name="phone">Phone</string>
+    <string name="button">Confirm</string>
+    <string name="add_event">+ Add Event</string>
+</resources>

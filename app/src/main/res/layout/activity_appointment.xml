@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:padding="@dimen/pad_screen">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/appointment"
+        android:textSize="@dimen/text_title"
+        android:textStyle="bold"
+        android:textColor="@color/text"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/tvMonth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/june_2023"
+        android:textSize="@dimen/text_section"
+        android:textColor="@color/muted"
+        android:layout_marginTop="@dimen/m_xs"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <HorizontalScrollView
+        android:id="@+id/dayScroll"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/height_day_chip"
+        android:layout_marginTop="@dimen/m_sm"
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@id/tvMonth"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/height_day_chip"
+                android:background="@drawable/bg_chip"
+                android:gravity="center"
+                android:paddingStart="@dimen/chip_pad_h"
+                android:paddingEnd="@dimen/chip_pad_h"
+                android:text="Mon&#10;5"
+                android:textColor="@color/text"
+                android:layout_marginEnd="@dimen/gap"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/height_day_chip"
+                android:background="@drawable/bg_chip_selected"
+                android:gravity="center"
+                android:paddingStart="@dimen/chip_pad_h"
+                android:paddingEnd="@dimen/chip_pad_h"
+                android:text="Tue&#10;6"
+                android:textColor="@color/on_selected"
+                android:layout_marginEnd="@dimen/gap"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/height_day_chip"
+                android:background="@drawable/bg_chip"
+                android:gravity="center"
+                android:paddingStart="@dimen/chip_pad_h"
+                android:paddingEnd="@dimen/chip_pad_h"
+                android:text="Wed&#10;7"
+                android:textColor="@color/text"
+                android:layout_marginEnd="@dimen/gap"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/height_day_chip"
+                android:background="@drawable/bg_chip"
+                android:gravity="center"
+                android:paddingStart="@dimen/chip_pad_h"
+                android:paddingEnd="@dimen/chip_pad_h"
+                android:text="Thu&#10;8"
+                android:textColor="@color/text"
+                android:layout_marginEnd="@dimen/gap"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/height_day_chip"
+                android:background="@drawable/bg_chip"
+                android:gravity="center"
+                android:paddingStart="@dimen/chip_pad_h"
+                android:paddingEnd="@dimen/chip_pad_h"
+                android:text="Fri&#10;9"
+                android:textColor="@color/text"
+                android:layout_marginEnd="@dimen/gap"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/height_day_chip"
+                android:background="@drawable/bg_chip"
+                android:gravity="center"
+                android:paddingStart="@dimen/chip_pad_h"
+                android:paddingEnd="@dimen/chip_pad_h"
+                android:text="Sat&#10;10"
+                android:textColor="@color/text"/>
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/tvSlots"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/time_slots"
+        android:textStyle="bold"
+        android:textColor="@color/text"
+        android:textSize="@dimen/text_section"
+        android:layout_marginTop="@dimen/m_md"
+        app:layout_constraintTop_toBottomOf="@id/dayScroll"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <GridLayout
+        android:id="@+id/gridSlots"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:columnCount="4"
+        android:useDefaultMargins="true"
+        android:layout_marginTop="@dimen/m_sm"
+        app:layout_constraintTop_toBottomOf="@id/tvSlots"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView style="@style/SlotChip" android:text="08:00"/>
+        <TextView style="@style/SlotChip" android:text="09:00"/>
+        <TextView style="@style/SlotChip" android:text="10:00"/>
+        <TextView style="@style/SlotChip" android:text="11:00"/>
+        <TextView style="@style/SlotChip" android:text="12:00"/>
+        <TextView
+            style="@style/SlotChip"
+            android:text="13:00"
+            android:background="@drawable/bg_chip_selected"
+            android:textColor="@color/on_selected"/>
+        <TextView style="@style/SlotChip" android:text="14:00"/>
+        <TextView style="@style/SlotChip" android:text="15:00"/>
+        <TextView style="@style/SlotChip" android:text="16:00"/>
+        <TextView style="@style/SlotChip" android:text="17:00"/>
+        <TextView style="@style/SlotChip" android:text="18:00"/>
+        <TextView style="@style/SlotChip" android:text="19:00"/>
+    </GridLayout>
+
+    <TextView
+        android:id="@+id/tvInfo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/information"
+        android:textStyle="bold"
+        android:textColor="@color/text"
+        android:textSize="@dimen/text_section"
+        android:layout_marginTop="@dimen/m_md"
+        app:layout_constraintTop_toBottomOf="@id/gridSlots"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <EditText
+        android:id="@+id/etName"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/height_input"
+        android:hint="@string/name"
+        android:textColor="@color/text"
+        android:textColorHint="@color/hint"
+        android:background="@drawable/bg_chip"
+        android:paddingStart="@dimen/chip_pad_h"
+        android:paddingEnd="@dimen/chip_pad_h"
+        android:inputType="textPersonName"
+        android:layout_marginTop="@dimen/m_sm"
+        app:layout_constraintTop_toBottomOf="@id/tvInfo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <EditText
+        android:id="@+id/etPhone"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/height_input"
+        android:hint="@string/phone"
+        android:textColor="@color/text"
+        android:textColorHint="@color/hint"
+        android:background="@drawable/bg_chip"
+        android:paddingStart="@dimen/chip_pad_h"
+        android:paddingEnd="@dimen/chip_pad_h"
+        android:inputType="phone"
+        android:layout_marginTop="@dimen/m_sm"
+        app:layout_constraintTop_toBottomOf="@id/etName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <Button
+        android:id="@+id/btnGo"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/height_primary_button"
+        android:text="@string/button"
+        android:textAllCaps="false"
+        android:textColor="@color/text"
+        android:background="@drawable/bg_primary_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
