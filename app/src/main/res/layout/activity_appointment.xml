@@ -199,6 +199,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <EditText
+        android:id="@+id/etAppointmentType"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/height_input"
+        android:hint="Appointment type"
+        android:textColor="@color/text"
+        android:textColorHint="@color/hint"
+        android:background="@drawable/bg_chip"
+        android:paddingStart="@dimen/chip_pad_h"
+        android:paddingEnd="@dimen/chip_pad_h"
+        android:inputType="textCapWords"
+        android:layout_marginTop="@dimen/m_sm"
+        app:layout_constraintTop_toBottomOf="@id/etPhone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <Button
         android:id="@+id/btnGo"
         android:layout_width="0dp"
@@ -207,6 +223,7 @@
         android:textAllCaps="false"
         android:textColor="@color/text"
         android:background="@drawable/bg_primary_button"
+        app:layout_constraintTop_toBottomOf="@id/etAppointmentType"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

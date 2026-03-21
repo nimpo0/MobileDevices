@@ -1,45 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:layout_marginBottom="@dimen/gap"
     android:background="@drawable/bg_event_card"
-    android:padding="@dimen/pad_block"
-    android:layout_marginBottom="@dimen/gap">
+    android:padding="@dimen/pad_block">
+
+    <ImageButton
+        android:id="@+id/btnEdit"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:background="@drawable/bg_chip"
+        android:contentDescription="Edit"
+        android:src="@android:drawable/ic_menu_edit"
+        app:tint="@color/icon_tint"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnDelete"
+        android:layout_marginEnd="8dp"/>
+
+    <ImageButton
+        android:id="@+id/btnDelete"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:background="@drawable/bg_chip"
+        android:contentDescription="Delete"
+        android:src="@android:drawable/ic_menu_delete"
+        app:tint="@color/icon_tint"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
         android:id="@+id/tvEventTitle"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:textColor="@color/text"
+        android:layout_marginEnd="12dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnEdit"
         tools:text="Lorem ipsum dolor sit amet" />
 
     <TextView
         android:id="@+id/tvEventDesc"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textColor="@color/muted"
         android:textSize="@dimen/text_caption"
         android:layout_marginTop="@dimen/m_xs"
+        android:layout_marginEnd="12dp"
+        app:layout_constraintTop_toBottomOf="@id/tvEventTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnEdit"
         tools:text="Lorem ipsum..." />
 
     <TextView
         android:id="@+id/tvEventTime"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textColor="@color/text"
         android:textSize="@dimen/text_caption"
         android:layout_marginTop="@dimen/m_sm"
+        app:layout_constraintTop_toBottomOf="@id/tvEventDesc"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         tools:text="10:00 - 12:00" />
 
     <TextView
         android:id="@+id/tvEventAddress"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textColor="@color/text"
         android:textSize="@dimen/text_caption"
         android:layout_marginTop="2dp"
+        app:layout_constraintTop_toBottomOf="@id/tvEventTime"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         tools:text="Address" />
-</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

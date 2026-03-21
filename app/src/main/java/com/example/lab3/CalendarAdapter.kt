@@ -4,11 +4,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 
 class CalendarAdapter(
-    private var items: List<DayCell>
+    private var items: List<DayCell>,
+    private val onDayClick: (Int) -> Unit
 ) : RecyclerView.Adapter<CalendarAdapter.DayVH>() {
 
     class DayVH(view: View) : RecyclerView.ViewHolder(view) {
@@ -31,16 +32,19 @@ class CalendarAdapter(
             holder.dot.visibility = View.GONE
             holder.itemView.isClickable = false
             holder.itemView.alpha = 0.3f
+            holder.itemView.setOnClickListener(null)
             return
         }
 
         holder.itemView.alpha = 1f
-        holder.itemView.isClickable = false
+        holder.itemView.isClickable = true
         holder.tvDay.text = cell.dayNumber.toString()
 
         holder.tvDay.background = if (cell.isSelected) {
             ContextCompat.getDrawable(holder.tvDay.context, R.drawable.bg_day_selected)
-        } else null
+        } else {
+            null
+        }
 
         holder.tvDay.setTextColor(
             ContextCompat.getColor(
@@ -50,6 +54,10 @@ class CalendarAdapter(
         )
 
         holder.dot.visibility = if (cell.hasEvents) View.VISIBLE else View.GONE
+
+        holder.itemView.setOnClickListener {
+            onDayClick(cell.dayNumber)
+        }
     }
 
     override fun getItemCount(): Int = items.size

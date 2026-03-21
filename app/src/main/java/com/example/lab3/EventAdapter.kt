@@ -3,11 +3,14 @@ package com.example.lab3
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class EventAdapter(
-    private var items: List<EventItem>
+    private var items: List<EventItem>,
+    private val onEditClick: (EventItem) -> Unit,
+    private val onDeleteClick: (EventItem) -> Unit
 ) : RecyclerView.Adapter<EventAdapter.EventVH>() {
 
     class EventVH(view: View) : RecyclerView.ViewHolder(view) {
@@ -15,6 +18,8 @@ class EventAdapter(
         val desc: TextView = view.findViewById(R.id.tvEventDesc)
         val time: TextView = view.findViewById(R.id.tvEventTime)
         val address: TextView = view.findViewById(R.id.tvEventAddress)
+        val btnEdit: ImageButton = view.findViewById(R.id.btnEdit)
+        val btnDelete: ImageButton = view.findViewById(R.id.btnDelete)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventVH {
@@ -25,10 +30,19 @@ class EventAdapter(
 
     override fun onBindViewHolder(holder: EventVH, position: Int) {
         val item = items[position]
+
         holder.title.text = item.title
         holder.desc.text = item.desc
         holder.time.text = item.time
-        holder.address.text = item.address
+        holder.address.text = item.appointmentType
+
+        holder.btnEdit.setOnClickListener {
+            onEditClick(item)
+        }
+
+        holder.btnDelete.setOnClickListener {
+            onDeleteClick(item)
+        }
     }
 
     override fun getItemCount(): Int = items.size
