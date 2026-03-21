@@ -9,19 +9,17 @@ import androidx.activity.ComponentActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.Room
-import com.example.lab3.data.AppDatabase
+import com.example.lab3.data.model.ScheduleResponse
+import com.example.lab3.network.ScheduleApiService
 import java.util.Calendar
 import java.util.GregorianCalendar
 
 class ScheduleActivity : ComponentActivity() {
 
-    private lateinit var db: AppDatabase
+    private var year = 2026
+    private var month = 3
 
-    private val year = 2023
-    private val month = 6
-
-    private var selectedDay = 14
+    private var selectedDay = 25
 
     private val eventsMap: MutableMap<Int, MutableList<EventItem>> = mutableMapOf()
 
@@ -32,15 +30,7 @@ class ScheduleActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_schedule)
 
-        selectedDay = intent.getIntExtra("selected_day", 14)
-
-        db = Room.databaseBuilder(
-            applicationContext,
-            AppDatabase::class.java,
-            "lab3_database"
-        )
-            .allowMainThreadQueries()
-            .build()
+        selectedDay = intent.getIntExtra("selected_day", 25)
 
         val rvCalendar = findViewById<RecyclerView>(R.id.rvCalendar)
         val rvEvents = findViewById<RecyclerView>(R.id.rvEvents)
@@ -54,8 +44,6 @@ class ScheduleActivity : ComponentActivity() {
 
         rvCalendar.layoutManager = GridLayoutManager(this, 7)
         rvEvents.layoutManager = LinearLayoutManager(this)
-
-        loadEventsFromDatabase()
 
         calendarAdapter = CalendarAdapter(buildCalendarCells()) { clickedDay ->
             selectedDay = clickedDay
@@ -73,22 +61,40 @@ class ScheduleActivity : ComponentActivity() {
             }
         )
         rvEvents.adapter = eventAdapter
+
+        loadData()
     }
 
     override fun onResume() {
         super.onResume()
-        loadEventsFromDatabase()
-        refreshUi()
+        loadData()
     }
 
-    private fun refreshUi() {
-        calendarAdapter.update(buildCalendarCells())
-        eventAdapter.update(eventsMap[selectedDay] ?: emptyList())
+    private fun loadData() {
+        Log.d("API", "loadData")
+
+        val service = ScheduleApiService()
+        service.getScheduleData(object : ScheduleApiService.ScheduleCallback {
+            override fun onSuccess(scheduleResponse: ScheduleResponse) {
+                runOnUiThread {
+                    displayScheduleData(scheduleResponse)
+                }
+            }
+
+            override fun onFailure() {
+                runOnUiThread {
+                    displayError()
+                }
+            }
+        })
     }
 
-    private fun loadEventsFromDatabase() {
-        val schedules = db.userScheduleDao().getAll()
-        val details = db.appointmentDetailsDao().getAll()
+    private fun displayScheduleData(scheduleResponse: ScheduleResponse) {
+        val schedules = scheduleResponse.userSchedule ?: emptyList()
+        val details = scheduleResponse.appointmentDetails ?: emptyList()
+
+        Log.d("API", "Schedules loaded: ${schedules.size}")
+        Log.d("API", "Appointment details loaded: ${details.size}")
 
         val detailsByScheduleId = details.associateBy { it.scheduleId }
 
@@ -99,26 +105,26 @@ class ScheduleActivity : ComponentActivity() {
             val detail = detailsByScheduleId[schedule.id]
 
             val subtitle = buildString {
-                append(schedule.description)
+                append(schedule.description ?: "")
                 if (detail != null) {
                     append(" | ")
-                    append(detail.appointmentType)
+                    append(detail.appointmentType ?: "")
                     append(" | ")
-                    append(detail.name)
+                    append(detail.name ?: "")
                 }
             }
 
             val phoneInfo = if (detail != null) {
-                "Phone: ${detail.phone}"
+                "Phone: ${detail.phone ?: "-"}"
             } else {
                 "No phone"
             }
 
             val event = EventItem(
-                scheduleId = schedule.id,
-                title = schedule.title,
+                scheduleId = schedule.id ?: 0,
+                title = schedule.title ?: "No title",
                 desc = subtitle,
-                time = schedule.time,
+                time = schedule.time ?: "",
                 appointmentType = phoneInfo
             )
 
@@ -127,24 +133,35 @@ class ScheduleActivity : ComponentActivity() {
             eventsMap[day] = currentList
         }
 
-        Log.d("ROOM_DB", "Loaded events from DB: $eventsMap")
+        Log.d("API", "Loaded events from server: $eventsMap")
 
         if (!eventsMap.containsKey(selectedDay)) {
             selectedDay = eventsMap.keys.minOrNull() ?: selectedDay
         }
+
+        refreshUi()
+    }
+
+    private fun displayError() {
+        Log.d("API", "error loading data")
+        Toast.makeText(this, "Failed to load data", Toast.LENGTH_LONG).show()
+    }
+
+    private fun refreshUi() {
+        calendarAdapter.update(buildCalendarCells())
+        eventAdapter.update(eventsMap[selectedDay] ?: emptyList())
     }
 
     private fun deleteEvent(event: EventItem) {
-        val schedule = db.userScheduleDao().getById(event.scheduleId)
+        val dayEvents = eventsMap[selectedDay]
+        dayEvents?.removeAll { it.scheduleId == event.scheduleId }
 
-        if (schedule != null) {
-            db.userScheduleDao().delete(schedule)
+        if (dayEvents.isNullOrEmpty()) {
+            eventsMap.remove(selectedDay)
         }
 
-        loadEventsFromDatabase()
         refreshUi()
-
-        Toast.makeText(this, "Event deleted", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Event deleted from screen", Toast.LENGTH_SHORT).show()
     }
 
     private fun openEditScreen(event: EventItem) {
@@ -155,8 +172,8 @@ class ScheduleActivity : ComponentActivity() {
     }
 
     private fun extractDayNumber(dateText: String): Int? {
-        val number = Regex("""\d+""").find(dateText)?.value
-        return number?.toIntOrNull()
+        val parts = dateText.split("-")
+        return if (parts.size == 3) parts[2].toIntOrNull() else null
     }
 
     private fun buildCalendarCells(): List<DayCell> {
