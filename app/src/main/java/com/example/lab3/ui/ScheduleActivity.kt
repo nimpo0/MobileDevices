@@ -1,4 +1,4 @@
-package com.example.lab3
+package com.example.lab3.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,26 +9,30 @@ import androidx.activity.ComponentActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.lab3.data.model.ScheduleResponse
-import com.example.lab3.network.ScheduleApiService
+import com.example.lab3.R
+import com.example.lab3.data.model.DayCell
+import com.example.lab3.data.model.EventItem
+import com.example.lab3.di.DiHelper
 import java.util.Calendar
 import java.util.GregorianCalendar
 
-class ScheduleActivity : ComponentActivity() {
+class ScheduleActivity : ComponentActivity(), MainContract.View {
 
     private var year = 2026
     private var month = 3
-
     private var selectedDay = 25
 
     private val eventsMap: MutableMap<Int, MutableList<EventItem>> = mutableMapOf()
 
     private lateinit var calendarAdapter: CalendarAdapter
     private lateinit var eventAdapter: EventAdapter
+    private lateinit var presenter: MainContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_schedule)
+
+        presenter = DiHelper.getPresenter(this)
 
         selectedDay = intent.getIntExtra("selected_day", 25)
 
@@ -62,87 +66,26 @@ class ScheduleActivity : ComponentActivity() {
         )
         rvEvents.adapter = eventAdapter
 
-        loadData()
+        presenter.loadScheduleData(selectedDay)
     }
 
     override fun onResume() {
         super.onResume()
-        loadData()
+        presenter.loadScheduleData(selectedDay)
     }
 
-    private fun loadData() {
-        Log.d("API", "loadData")
+    override fun displayScheduleData(eventsMap: Map<Int, List<EventItem>>, selectedDay: Int) {
+        this.eventsMap.clear()
 
-        val service = ScheduleApiService()
-        service.getScheduleData(object : ScheduleApiService.ScheduleCallback {
-            override fun onSuccess(scheduleResponse: ScheduleResponse) {
-                runOnUiThread {
-                    displayScheduleData(scheduleResponse)
-                }
-            }
-
-            override fun onFailure() {
-                runOnUiThread {
-                    displayError()
-                }
-            }
-        })
-    }
-
-    private fun displayScheduleData(scheduleResponse: ScheduleResponse) {
-        val schedules = scheduleResponse.userSchedule ?: emptyList()
-        val details = scheduleResponse.appointmentDetails ?: emptyList()
-
-        Log.d("API", "Schedules loaded: ${schedules.size}")
-        Log.d("API", "Appointment details loaded: ${details.size}")
-
-        val detailsByScheduleId = details.associateBy { it.scheduleId }
-
-        eventsMap.clear()
-
-        for (schedule in schedules) {
-            val day = extractDayNumber(schedule.date) ?: continue
-            val detail = detailsByScheduleId[schedule.id]
-
-            val subtitle = buildString {
-                append(schedule.description ?: "")
-                if (detail != null) {
-                    append(" | ")
-                    append(detail.appointmentType ?: "")
-                    append(" | ")
-                    append(detail.name ?: "")
-                }
-            }
-
-            val phoneInfo = if (detail != null) {
-                "Phone: ${detail.phone ?: "-"}"
-            } else {
-                "No phone"
-            }
-
-            val event = EventItem(
-                scheduleId = schedule.id ?: 0,
-                title = schedule.title ?: "No title",
-                desc = subtitle,
-                time = schedule.time ?: "",
-                appointmentType = phoneInfo
-            )
-
-            val currentList = eventsMap[day] ?: mutableListOf()
-            currentList.add(event)
-            eventsMap[day] = currentList
+        for ((day, events) in eventsMap) {
+            this.eventsMap[day] = events.toMutableList()
         }
 
-        Log.d("API", "Loaded events from server: $eventsMap")
-
-        if (!eventsMap.containsKey(selectedDay)) {
-            selectedDay = eventsMap.keys.minOrNull() ?: selectedDay
-        }
-
+        this.selectedDay = selectedDay
         refreshUi()
     }
 
-    private fun displayError() {
+    override fun displayError() {
         Log.d("API", "error loading data")
         Toast.makeText(this, "Failed to load data", Toast.LENGTH_LONG).show()
     }
@@ -169,11 +112,6 @@ class ScheduleActivity : ComponentActivity() {
         intent.putExtra("edit_schedule_id", event.scheduleId)
         intent.putExtra("selected_day", selectedDay)
         startActivity(intent)
-    }
-
-    private fun extractDayNumber(dateText: String): Int? {
-        val parts = dateText.split("-")
-        return if (parts.size == 3) parts[2].toIntOrNull() else null
     }
 
     private fun buildCalendarCells(): List<DayCell> {

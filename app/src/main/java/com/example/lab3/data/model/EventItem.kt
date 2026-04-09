@@ -1,4 +1,4 @@
-package com.example.lab3
+package com.example.lab3.data.model
 
 data class EventItem(
     val scheduleId: Int,

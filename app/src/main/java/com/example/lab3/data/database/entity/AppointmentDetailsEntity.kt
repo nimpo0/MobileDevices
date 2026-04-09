@@ -1,4 +1,4 @@
-package com.example.lab3.data
+package com.example.lab3.data.database.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -12,7 +12,7 @@ import androidx.room.PrimaryKey
             entity = UserScheduleEntity::class,
             parentColumns = ["id"],
             childColumns = ["schedule_id"],
-            onDelete = ForeignKey.CASCADE
+            onDelete = ForeignKey.Companion.CASCADE
         )
     ]
 )

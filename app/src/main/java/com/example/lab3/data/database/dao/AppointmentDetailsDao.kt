@@ -1,4 +1,4 @@
-package com.example.lab3.data
+package com.example.lab3.data.database.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -6,11 +6,12 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import com.example.lab3.data.database.entity.AppointmentDetailsEntity
 
 @Dao
 interface AppointmentDetailsDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
     fun insert(details: AppointmentDetailsEntity): Long
 
     @Query("SELECT * FROM appointment_details")

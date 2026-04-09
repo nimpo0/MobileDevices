@@ -1,4 +1,4 @@
-package com.example.lab3
+package com.example.lab3.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,11 +13,12 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.core.content.ContextCompat
 import androidx.room.Room
-import com.example.lab3.data.AppDatabase
-import com.example.lab3.data.AppointmentDetailsEntity
-import com.example.lab3.data.DatabaseSeeder
-import com.example.lab3.data.UserScheduleEntity
-import com.example.lab3.data.RoomCrudTester
+import com.example.lab3.R
+import com.example.lab3.data.database.AppDatabase
+import com.example.lab3.data.database.entity.AppointmentDetailsEntity
+import com.example.lab3.data.database.DatabaseSeeder
+import com.example.lab3.data.database.RoomCrudTester
+import com.example.lab3.data.database.entity.UserScheduleEntity
 
 class MainActivity : ComponentActivity() {
 

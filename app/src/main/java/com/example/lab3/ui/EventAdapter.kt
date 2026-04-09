@@ -1,4 +1,4 @@
-package com.example.lab3
+package com.example.lab3.ui
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.lab3.R
+import com.example.lab3.data.model.EventItem
 
 class EventAdapter(
     private var items: List<EventItem>,

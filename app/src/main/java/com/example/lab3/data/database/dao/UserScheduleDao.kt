@@ -1,4 +1,4 @@
-package com.example.lab3.data
+package com.example.lab3.data.database.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -6,11 +6,12 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import com.example.lab3.data.database.entity.UserScheduleEntity
 
 @Dao
 interface UserScheduleDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
     fun insert(schedule: UserScheduleEntity): Long
 
     @Query("SELECT * FROM user_schedule")

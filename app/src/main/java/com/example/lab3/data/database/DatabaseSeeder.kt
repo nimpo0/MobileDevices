@@ -1,4 +1,7 @@
-package com.example.lab3.data
+package com.example.lab3.data.database
+
+import com.example.lab3.data.database.entity.AppointmentDetailsEntity
+import com.example.lab3.data.database.entity.UserScheduleEntity
 
 object DatabaseSeeder {
 

@@ -1,4 +1,4 @@
-package com.example.lab3.network
+package com.example.lab3.data.api
 
 import com.example.lab3.data.model.ScheduleResponse
 import retrofit2.Call
